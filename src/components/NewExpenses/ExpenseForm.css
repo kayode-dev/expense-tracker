@@ -25,3 +25,8 @@
     text-align: right;
   }
   
+  .button-right{
+    display: flex;
+    flex-direction: row;
+    justify-content:end;
+  }

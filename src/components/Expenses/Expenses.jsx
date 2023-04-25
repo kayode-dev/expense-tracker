@@ -1,42 +1,25 @@
-import React, {useState} from 'react'
-import ExpenseItem from "./ExpenseItem";
+import React, { useState } from "react";
 import "./Expenses.css";
 import ExpensesFilter from "../Filter/ExpensesFilter";
+import ExpenseList from "./ExpenseList";
+import ExpenseChart from "./ExpenseChart";
 
 function Expenses(props) {
+  const [year, setYear] = useState("2023");
 
-  const [year, setYear] = useState('2023');
-
-  const selectYearHandler = (yearSelected) =>{
+  const selectYearHandler = (yearSelected) => {
     setYear(yearSelected);
-  }
-  
+  };
+
+  const expenseByYear = props.data.filter(
+    (expense) => expense.date.getFullYear() === parseInt(year)
+  );
 
   return (
     <div className="expenses">
-
-      <ExpensesFilter selected={year} onSelectYear={selectYearHandler}/>
-
-      <ExpenseItem
-        name={props.data[0].name}
-        date={props.data[0].date}
-        price={props.data[0].price}
-      />
-      <ExpenseItem
-        name={props.data[1].name}
-        date={props.data[1].date}
-        price={props.data[1].price}                                             
-      />
-      <ExpenseItem
-        name={props.data[2].name}
-        date={props.data[2].date}
-        price={props.data[2].price}
-      />
-      <ExpenseItem
-        name={props.data[3].name}
-        date={props.data[3].date}
-        price={props.data[3].price}
-      />
+      <ExpensesFilter selected={year} onSelectYear={selectYearHandler} />
+      <ExpenseChart expenses={expenseByYear}/>
+      <ExpenseList item={expenseByYear} />
     </div>
   );
 }
